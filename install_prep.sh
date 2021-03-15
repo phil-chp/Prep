@@ -21,7 +21,7 @@ echo "\n\nUse '€prep' in your root folder to run the script."
 echo "Restart your terminal."
 echo "------------------------------------------------------------------\n\n"
 
-echo << EOF
+cat > $HOME/Documents/prep.sh <<EOL
 ##
 ## EPITECH PROJECT, 2021
 ## Prep
@@ -76,7 +76,7 @@ clear
 echo "\nDeheader done.\nProcess finished.\nPress enter to end..."
 read a
 clear
-EOF > $HOME/Documents/prep.sh
+EOL
 
 chmod +x $HOME/Documents/prep.sh
 echo "alias €prep='$HOME/Documents/prep.sh'" >> $HOME/.bashrc && source $HOME/.bashrc

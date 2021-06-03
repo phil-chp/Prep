@@ -18,10 +18,14 @@ usefull programs to check if you did your work correctly
 - Place it somewhere you would like
 - Give the file the permissions necessary for execution:
 
-```chmod +x /path/to/file/prep.sh```
+```sh
+chmod +x "/path/to/file/prep.sh"
+```
 - Set an alias in your terminal config file for ease of use:
 
-```alias €prep="/path/to/file/prep.sh"```
+```sh
+alias €prep="/path/to/file/prep.sh"
+```
 
 ### 3. Setting the correct paths
 Open the prep.sh file and go to line 24 & 25, on the variables NORMEZ and DEHEADER set your paths accordingly.
@@ -31,11 +35,16 @@ If you don't have these programs, look at step 1 of the installation.
 ### 4. Execute
 Either open a new terminal or reload your current one using:
 
-```source ~/.bashrc``` (replace bashrc by your terminal config file)
+```sh
+source ~/.bashrc
+```
+(replace bashrc by your terminal config file)
 
-Finally execute pre by calling the alias you set, by default:
+Finally execute Prep by calling the alias you set, by default:
 
-```€prep```
+```sh
+€prep
+```
 
 ## What it do
 

@@ -57,7 +57,7 @@ then
     else
         echo "NormEZ is either not installed, corrupted or the path to the file is wrong."
         echo "If you have not set the correct path check step 3 of installation on the github page:"
-        # echo "> https://github.com/Philippe-cheype/Prep#3.-setting-the-correct-paths"
+        echo "> https://github.com/Philippe-cheype/Prep#3-setting-the-correct-paths"
         echo "Or download the files if you have not done it yet:"
         echo "> https://github.com/ronanboiteau/NormEZ/"
     fi
@@ -110,7 +110,7 @@ then
 else
     echo "Deheader is either not installed, corrupted or the path to the file is wrong."
         echo "If you have not set the correct path check step 3 of installation on the github page:"
-        # echo "> https://github.com/Philippe-cheype/Prep#3.-setting-the-correct-paths"
+        echo "> https://github.com/Philippe-cheype/Prep#3-setting-the-correct-paths"
         echo "Or download the files if you have not done it yet:"
     echo "> https://gitlab.com/esr/deheader/"
 fi

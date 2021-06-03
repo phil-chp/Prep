@@ -4,31 +4,51 @@ I made this program to make my life easier
 Espacially when working on TTY, all it does is execute
 usefull programs to check if you did your work correctly
 
-Utilites needed:
+## Installation
+
+### 1. Download utilities
+- Ruby:     https://www.ruby-lang.org/en/documentation/installation/
 - NormEZ:   https://github.com/ronanboiteau/NormEZ
 - bubulle:  https://github.com/aureliancnx/Bubulle-Norminette
 - cppcheck: http://cppcheck.sourceforge.net/
 - deheader: https://gitlab.com/esr/deheader
 
-Add this file with an alias to your terminal config for ease of use:
-    alias [name]="[path to the prep.sh file]"
+### 2. Install
+- Download the prep.sh file
+- Place it somewhere you would like
+- Give the file the permissions necessary for execution:
 
+```chmod +x /path/to/file/prep.sh```
+- Set an alias in your terminal config file for ease of use:
+
+```alias €prep="/path/to/file/prep.sh"```
+
+### 3. Setting the correct paths
+Open the prep.sh file and go to line 24 & 25, on the variables NORMEZ and DEHEADER set your paths accordingly.
+
+If you don't have these programs, look at step 1 of the installation.
+
+### 4. Execute
+Either open a new terminal or reload your current one using:
+
+```source ~/.bashrc``` (replace bashrc by your terminal config file)
+
+Finally execute pre by calling the alias you set, by default:
+
+```€prep```
 
 ## What it do
 
-Make fclean to remove all your useless files
-Removes even more useless files to be sure you won't have a 'moulie' error
+Make fclean to remove all your unwanted files
+Removes even more undesired files to be sure you won't have a 'moulie' error
 
 NormEZ checks for coding style errors
-bubulle checks for even more coding style errors. (Don't trust everything bubulle says, it's way to aggressive when checking for errors, if you don't understand the error than you are probably right.)
+bubulle checks for even more coding style errors.
 (both these programs were created by epitech students)
 
-Cppcheck, runs through your program and does a veryyy in depth check for coding errors. (Sometimes, it too is too agressive so don't fully trust it)
+Cppcheck, runs through your program and does a very in depth check for coding errors. (ex: Memory leaks)
 
-And at last deheader checks for unused header files and mentions them so you can remove them, it also checks for missing header files.
-
-I prefer to use these programs that check too much instead of just what's important, it's always better to be in control so that no errors slip by.
-
+And at last deheader checks for unused header files and/or missing ones, so you always have everything up to date.
 
 ## Disclaimer
 

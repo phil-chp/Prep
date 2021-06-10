@@ -28,8 +28,13 @@ DEHEADER="$HOME/path/to/file/deheader"
 
 
 clear
+if [ "$1" = "-f" ];
+then
+    make fclean -s
+else
+    make fclean -s || { echo "\nEither you are not in a repo, or you are missing a Makefile\nStopping execution"; exit 1; }
+fi
 echo "Make fclean + Removing unnecessary files:"
-make fclean -s || { echo "\nEither you are not in a repo, or you are missing a Makefile\nStopping execution"; exit 1; }
 echo "- Make fclean done"
 find -name "*.o"      -delete && echo "- Removed .o files"
 find -name "*.gc*"    -delete && echo "- Removed criterion temp files"

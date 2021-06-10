@@ -46,18 +46,25 @@ Finally execute Prep by calling the alias you set, by default:
 €prep
 ```
 
+For safety reasons prep won't execute in a folder not containing a Makefile, you can still force it though:
+```sh
+€prep -f
+```
+<span style="color:red">Make sure you are not about to loose files before executing this!</span>
+
 ## What it do
 
-Make fclean to remove all your unwanted files
-Removes even more undesired files to be sure you won't have a 'moulie' error
+Make fclean to remove all your unwanted files.
 
-NormEZ checks for coding style errors
+Removes even more undesired files to be sure you won't have a 'moulie' error.
+
+NormEZ checks for coding style errors.
 bubulle checks for even more coding style errors.
 (both these programs were created by epitech students)
 
-Cppcheck, runs through your program and does a very in depth check for coding errors. (ex: Memory leaks)
+CppCheck, runs through your program and does a very in depth check for coding errors. (ex: Memory leaks)
 
-And at last deheader checks for unused header files and/or missing ones, so you always have everything up to date.
+Deheader checks for unused header files and/or missing ones, so you always have everything up to date.
 
 ## Disclaimer
 

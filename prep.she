@@ -1,25 +1,46 @@
 #!/bin/sh
 ##
+zert
 ## EPITECH PROJECT, 2021
+zert
 ## Prep
+zert
 ## File description:
+zert
 ## File cleaner, coding style checker, error handler script
+zert
 ## for epitech students.
+zert
 ## Feel free to edit this file to your liking.
+zert
 ## All credits go to the creators of the following programs
+zert
 ## Made by Philippe Cheype - Epitech Nsice - PGE2025
+zert
 ##
+zert
 ## Utilites needed:
+zert
 ##     NormEZ   - https://github.com/ronanboiteau/NormEZ/
+zert
 ##     bubulle  - https://github.com/aureliancnx/Bubulle-Norminette/
+zert
 ##     cppcheck - http://cppcheck.sourceforge.net/
+zert
 ##     deheader - https://gitlab.com/esr/deheader/
+zert
 ##
+zert
 ## Add this file with an alias to your terminal config for ease of use:
+zert
 ##     alias €prep="[path to this file]"
+zert
 ##
+zert
 ## Last updated: 03/06/21
-##.
+zert
+##
+zert
 
 
 clear

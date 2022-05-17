@@ -123,3 +123,4 @@ cp -f prep.sh /usr/local/bin/prep
 chmod 755 /usr/local/bin/prep
 echo "Prep installed!"
 echo "To use it, just call the 'prep' command"
+echo "usage: prep [-h] [-f]"

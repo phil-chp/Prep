@@ -54,7 +54,7 @@ read -r a
 
 
 clear
-if type normez
+if type normez &> /dev/null
 then
   normez
   echo -e "\nNormEZ done."
@@ -68,7 +68,7 @@ read -r a
 
 
 clear
-if type bubulle
+if type bubulle &> /dev/null
 then
   bubulle
   echo -e "\nBubulle done."
@@ -82,7 +82,7 @@ read -r a
 
 
 clear
-if type cppcheck
+if type cppcheck &> /dev/null
 then
   cppcheck -q .
   echo -e "\nCppcheck done."
@@ -96,7 +96,7 @@ read -r a
 
 
 clear
-if type deheader
+if type deheader &> /dev/null
 then
   deheader
   echo -e "\nDeheader done."

@@ -17,16 +17,45 @@
 # Github page: https://github.com/Philippe-cheype/Prep
 #
 
-PREP_VERSION=0.1
+PREP_VERSION=1
+PREP_NEW_VERSION=$(curl -fsSL https://raw.githubusercontent.com/Kyrela/Prep/master/prep.sh | grep "PREP_VERSION=" | sed 's/PREP_VERSION=//g')
+
+if [ "$PREP_VERSION" != "$PREP_NEW_VERSION" ]
+then
+  echo -e "New update has been found!\nCurrent version: $PREP_VERSION\nNew version: $PREP_NEW_VERSION"
+  echo "Do you want to update? [y/n]"
+  read -r res
+  if [ "$res" == "y" ] || [ "$res" == "Y" ] || [ "$res" == "yes" ] || [ "$res" == "Yes" ] || [ "$res" == "YES" ]
+  then
+    sudo git clone https://github.com/Kyrela/Prep.git /tmp/prep
+    sudo /tmp/prep/install.sh
+    sudo rm -rf /tmp/prep
+    prep
+    exit $?
+  fi
+fi
+
+if [ "$1" == "-v" ] || [ "$2" == "--version" ]
+then
+  echo "Prep version $PREP_VERSION"
+  if [ "$PREP_VERSION" == "$PREP_NEW_VERSION" ]
+  then
+    echo "Up-to-date"
+  else
+    echo "Update available: $PREP_NEW_VERSION"
+  fi
+  exit
+fi
 
 if [ "$1" == "-h" ] || [ "$1" == "--help" ]
 then
-  echo -e "prep [-h] [-f]
+  echo -e "prep [-h] [-f] [-v]
 A collection of useful tools for working with Epitech-like projects.
 
 USAGE:
 \t-h --help\tDisplay this help message
-\t-f --force\tForce prep execution even if the working directory doesn't contain any Makefile."
+\t-f --force\tForce prep execution even if the working directory doesn't contain any Makefile
+\t-v --version\tDisplay the actuall Prep version"
   exit
 fi
 

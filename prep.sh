@@ -17,6 +17,8 @@
 # Github page: https://github.com/Philippe-cheype/Prep
 #
 
+PREP_VERSION=0.1
+
 if [ "$1" == "-h" ] || [ "$1" == "--help" ]
 then
   echo -e "prep [-h] [-f]

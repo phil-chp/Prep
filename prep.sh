@@ -18,7 +18,7 @@
 #
 
 PREP_VERSION=1
-PREP_NEW_VERSION=$(curl -fsSL https://raw.githubusercontent.com/Kyrela/Prep/master/prep.sh | grep -P "^PREP_VERSION=" | sed 's/PREP_VERSION=//g')
+PREP_NEW_VERSION=$(curl -fsSL https://raw.githubusercontent.com/Philippe-cheype/Prep/master/prep.sh | grep -P "^PREP_VERSION=" | sed 's/PREP_VERSION=//g')
 PREP_SHOULD_CLEAR=1
 
 if [ "$PREP_VERSION" != "$PREP_NEW_VERSION" ]
@@ -28,7 +28,7 @@ then
   read -r res
   if [ "$res" == "y" ] || [ "$res" == "Y" ] || [ "$res" == "yes" ] || [ "$res" == "Yes" ] || [ "$res" == "YES" ]
   then
-    sudo git clone https://github.com/Kyrela/Prep.git /tmp/prep -q
+    sudo git clone https://github.com/Philippe-cheype/Prep.git /tmp/prep -q
     cd /tmp/prep
     sudo /tmp/prep/install.sh > /dev/null
     cd - > /dev/null

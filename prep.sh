@@ -33,7 +33,7 @@ then
     sudo /tmp/prep/install.sh
     cd -
     sudo rm -rf /tmp/prep
-    prep
+    prep "$@"
     exit $?
   fi
 fi

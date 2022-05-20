@@ -28,11 +28,10 @@ USAGE:
   exit
 fi
 
-if [ "$1" == "-f" ] || [ "$1" == "--force" ]
+if (! make fclean &> /dev/null) && [ "$1" != "-f" ] && [ "$1" != "--force" ]
 then
-  make fclean -s
-else
-  make fclean -s || { echo -e "Either you are not in a repo, or you are missing a Makefile\nStopping execution"; exit 1; }
+  echo -e "No Makefile detected, stopping execution.\n\e[3mTo force prep to continue execution, use -f\e[23m"
+  exit 1
 fi
 
 clear

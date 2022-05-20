@@ -8,7 +8,7 @@
 # All credits go to the creators of the following programs
 # Made by Philippe Cheype - Epitech Nice - PGE2025
 #
-# Utilites needed:
+# Utilities needed:
 #     NormEZ   - https://github.com/ronanboiteau/NormEZ/
 #     bubulle  - https://github.com/aureliancnx/Bubulle-Norminette/
 #     cppcheck - http://cppcheck.sourceforge.net/

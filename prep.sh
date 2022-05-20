@@ -24,15 +24,16 @@ PREP_SHOULD_CLEAR=1
 if [ "$PREP_VERSION" != "$PREP_NEW_VERSION" ]
 then
   echo -e "New update has been found!\nCurrent version: $PREP_VERSION\nNew version: $PREP_NEW_VERSION"
-  echo "Do you want to update? [y/n]"
+  echo -n "Do you want to update? [y/n] "
   read -r res
   if [ "$res" == "y" ] || [ "$res" == "Y" ] || [ "$res" == "yes" ] || [ "$res" == "Yes" ] || [ "$res" == "YES" ]
   then
-    sudo git clone https://github.com/Kyrela/Prep.git /tmp/prep
+    sudo git clone https://github.com/Kyrela/Prep.git /tmp/prep -q
     cd /tmp/prep
-    sudo /tmp/prep/install.sh
-    cd -
+    sudo /tmp/prep/install.sh > /dev/null
+    cd - > /dev/null
     sudo rm -rf /tmp/prep
+    echo -e "Prep updated successfully\n"
     prep "$@"
     exit $?
   fi

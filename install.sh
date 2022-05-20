@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-if [ "$1" == "--help" ] || [ "$1" == "-h" ]
+if [[ "$*" == *"-h"* ]] || [[ "$*" == *"--help"* ]]
 then
   echo -e "install.sh [-h] [-r]
 Install the Prep script on the system
 
 USAGE:
-\t-h --help\t\tDisplay this message
-\t-r --remove\t\tRemove the program from the system"
+\t-h --help\tDisplay this message
+\t-r --remove\tRemove the program from the system"
   exit
 fi
 
@@ -15,7 +15,7 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
-if [ "$1" == "--remove" ] || [ "$1" == "-r" ]
+if [[ "$*" == *"-r"* ]] || [[ "$*" == *"--remove"* ]]
 then
   echo "Removing Prep..."
   rm -rf /usr/local/bin/prep
@@ -154,4 +154,4 @@ fi
 
 echo "Prep installed!"
 echo "To use it, just call the 'prep' command"
-echo "usage: prep [-h] [-f]"
+echo "usage: prep [-h] [-f] [-v] [-c]"

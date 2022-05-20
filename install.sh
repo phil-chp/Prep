@@ -154,4 +154,4 @@ fi
 
 echo "Prep installed!"
 echo "To use it, just call the 'prep' command"
-echo "usage: prep [-h] [-f] [-v] [-c]"
+echo "usage: prep [-h] [-f] [-v] [-c] [-u]"

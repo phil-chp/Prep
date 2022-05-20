@@ -18,8 +18,13 @@
 #
 
 PREP_VERSION=1
-PREP_NEW_VERSION=$(curl -fsSL https://raw.githubusercontent.com/Philippe-cheype/Prep/master/prep.sh | grep -P "^PREP_VERSION=" | sed 's/PREP_VERSION=//g')
+PREP_NEW_VERSION="$PREP_VERSION"
 PREP_SHOULD_CLEAR=1
+
+if [[ "$*" != *"-u"* ]] && [[ "$*" != *"--no-update"* ]]
+then
+  PREP_NEW_VERSION=$(curl -fsSL https://raw.githubusercontent.com/Philippe-cheype/Prep/master/prep.sh | grep -P "^PREP_VERSION=" | sed 's/PREP_VERSION=//g')
+fi
 
 if [ "$PREP_VERSION" != "$PREP_NEW_VERSION" ]
 then
@@ -53,14 +58,15 @@ fi
 
 if [[ "$*" == *"-h"* ]] || [[ "$*" == *"--help"* ]]
 then
-  echo -e "prep [-h] [-f] [-v]
+  echo -e "prep [-h] [-v] [-f] [-c] [-u]
 A collection of useful tools for working with Epitech-like projects.
 
 USAGE:
 \t-h --help\tDisplay this help message
-\t-f --force\tForce prep execution even if the working directory doesn't contain any Makefile
 \t-v --version\tDisplay the actual Prep version
-\t-c --no-clear\tDisable the terminal clearing behavior"
+\t-f --force\tForce prep execution even if the working directory doesn't contain any Makefile
+\t-c --no-clear\tDisable the terminal clearing behavior
+\t-u --no-update\tDisable the update check"
   exit
 fi
 

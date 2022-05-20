@@ -29,7 +29,9 @@ then
   if [ "$res" == "y" ] || [ "$res" == "Y" ] || [ "$res" == "yes" ] || [ "$res" == "Yes" ] || [ "$res" == "YES" ]
   then
     sudo git clone https://github.com/Kyrela/Prep.git /tmp/prep
+    cd /tmp/prep
     sudo /tmp/prep/install.sh
+    cd -
     sudo rm -rf /tmp/prep
     prep
     exit $?

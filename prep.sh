@@ -18,7 +18,7 @@
 #
 
 PREP_VERSION=1
-PREP_NEW_VERSION=$(curl -fsSL https://raw.githubusercontent.com/Kyrela/Prep/master/prep.sh | grep "PREP_VERSION=" | sed 's/PREP_VERSION=//g')
+PREP_NEW_VERSION=$(curl -fsSL https://raw.githubusercontent.com/Kyrela/Prep/master/prep.sh | grep -P "^PREP_VERSION=" | sed 's/PREP_VERSION=//g')
 
 if [ "$PREP_VERSION" != "$PREP_NEW_VERSION" ]
 then

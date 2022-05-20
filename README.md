@@ -24,6 +24,11 @@ USAGE:
         -r --remove             Remove the program from the system
 ```
 
+You can also just copy/paste this script:
+```bash
+git clone https://github.com/Philippe-cheype/Prep.git prep && cd prep && sudo ./install.sh && cd .. && rm -rf prep 
+```
+
 ## Usage
 
 ```

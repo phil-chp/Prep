@@ -8,7 +8,7 @@
 # All credits go to the creators of the following programs
 # Made by Philippe Cheype - Epitech Nice - PGE2025
 #
-# Utilites needed:
+# Utilities needed:
 #     NormEZ   - https://github.com/ronanboiteau/NormEZ/
 #     bubulle  - https://github.com/aureliancnx/Bubulle-Norminette/
 #     cppcheck - http://cppcheck.sourceforge.net/
@@ -17,24 +17,71 @@
 # Github page: https://github.com/Philippe-cheype/Prep
 #
 
-if [ "$1" == "-h" ] || [ "$1" == "--help" ]
+PREP_VERSION=1
+PREP_NEW_VERSION="$PREP_VERSION"
+PREP_SHOULD_CLEAR=1
+
+if [[ "$*" != *"-u"* ]] && [[ "$*" != *"--no-update"* ]]
 then
-  echo -e "prep [-h] [-f]
+  PREP_NEW_VERSION=$(curl -fsSL https://raw.githubusercontent.com/Philippe-cheype/Prep/master/prep.sh | grep -P "^PREP_VERSION=" | sed 's/PREP_VERSION=//g')
+fi
+
+if [ "$PREP_VERSION" != "$PREP_NEW_VERSION" ]
+then
+  echo -e "New update has been found!\nCurrent version: $PREP_VERSION\nNew version: $PREP_NEW_VERSION"
+  echo -n "Do you want to update? [y/n] "
+  read -r res
+  if [ "$res" == "y" ] || [ "$res" == "Y" ] || [ "$res" == "yes" ] || [ "$res" == "Yes" ] || [ "$res" == "YES" ]
+  then
+    sudo git clone https://github.com/Philippe-cheype/Prep.git /tmp/prep -q
+    cd /tmp/prep
+    sudo /tmp/prep/install.sh > /dev/null
+    cd - > /dev/null
+    sudo rm -rf /tmp/prep
+    echo -e "Prep updated successfully\n"
+    prep "$@"
+    exit $?
+  fi
+fi
+
+if [[ "$*" == *"-v"* ]] || [[ "$*" == *"--version"* ]]
+then
+  echo "Prep version $PREP_VERSION"
+  if [ "$PREP_VERSION" == "$PREP_NEW_VERSION" ]
+  then
+    echo "Up-to-date"
+  else
+    echo "Update available: $PREP_NEW_VERSION"
+  fi
+  exit
+fi
+
+if [[ "$*" == *"-h"* ]] || [[ "$*" == *"--help"* ]]
+then
+  echo -e "prep [-h] [-v] [-f] [-c] [-u]
 A collection of useful tools for working with Epitech-like projects.
 
 USAGE:
 \t-h --help\tDisplay this help message
-\t-f --force\tForce prep execution even if the working directory doesn't contain any Makefile."
+\t-v --version\tDisplay the actual Prep version
+\t-f --force\tForce prep execution even if the working directory doesn't contain any Makefile
+\t-c --no-clear\tDisable the terminal clearing behavior
+\t-u --no-update\tDisable the update check"
   exit
 fi
 
-if (! make fclean &> /dev/null) && [ "$1" != "-f" ] && [ "$1" != "--force" ]
+if [[ "$*" == *"-c"* ]] || [[ "$*" == *"--no-clear"* ]]
+then
+  PREP_SHOULD_CLEAR=0
+fi
+
+if (! make fclean &> /dev/null) && [[ "$*" != *"-f"* ]] && [[ "$*" != *"--force"* ]]
 then
   echo -e "No Makefile detected, stopping execution.\n\e[3mTo force prep to continue execution, use -f\e[23m"
   exit 1
 fi
 
-clear
+if [ "$PREP_SHOULD_CLEAR" == "1" ]; then clear; fi
 echo "Make fclean + Removing unnecessary files:"
 echo "- Make fclean done"
 find . -name "*.o"         -delete && echo "- Removed .o files"
@@ -52,7 +99,7 @@ echo -e "\nRemoved temp files.\nPress enter to continue..."
 read -r a
 
 
-clear
+if [ "$PREP_SHOULD_CLEAR" == "1" ]; then clear; fi
 if type normez &> /dev/null
 then
   normez
@@ -62,11 +109,11 @@ else
   echo "- Prep: https://github.com/Philippe-cheype/Prep"
   echo "- NormEZ: https://github.com/ronanboiteau/NormEZ/"
 fi
-echo -e "\nPress enter to continue..."
+echo "Press enter to continue..."
 read -r a
 
 
-clear
+if [ "$PREP_SHOULD_CLEAR" == "1" ]; then clear; fi
 if type bubulle &> /dev/null
 then
   bubulle
@@ -76,11 +123,11 @@ else
   echo "- Prep: https://github.com/Philippe-cheype/Prep"
   echo "- Bubulle: https://github.com/aureliancnx/Bubulle-Norminette/"
 fi
-echo -e "\nPress enter to continue..."
+echo "Press enter to continue..."
 read -r a
 
 
-clear
+if [ "$PREP_SHOULD_CLEAR" == "1" ]; then clear; fi
 if type cppcheck &> /dev/null
 then
   cppcheck -q .
@@ -90,11 +137,11 @@ else
   echo "- Prep: https://github.com/Philippe-cheype/Prep"
   echo "- cppcheck: http://cppcheck.sourceforge.net/"
 fi
-echo -e "\nPress enter to continue..."
+echo "Press enter to continue..."
 read -r a
 
 
-clear
+if [ "$PREP_SHOULD_CLEAR" == "1" ]; then clear; fi
 if type deheader &> /dev/null
 then
   deheader
@@ -104,6 +151,6 @@ else
   echo "- Prep: https://github.com/Philippe-cheype/Prep"
   echo "- deheader: https://gitlab.com/esr/deheader/"
 fi
-echo -e "\nPrep finished.\nPress enter to exit..."
+echo -e "Prep finished.\nPress enter to exit..."
 read -r a
-clear
+if [ "$PREP_SHOULD_CLEAR" == "1" ]; then clear; fi

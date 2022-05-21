@@ -24,15 +24,23 @@ USAGE:
         -r --remove             Remove the program from the system
 ```
 
+You can also just copy/paste this script:
+```bash
+git clone https://github.com/Philippe-cheype/Prep.git prep && cd prep && sudo ./install.sh && cd .. && rm -rf prep 
+```
+
 ## Usage
 
 ```
-prep [-h] [-f]
+prep [-h] [-v] [-f] [-c] [-u]
 A collection of useful tools for working with Epitech-like projects.
 
 USAGE:
-        -h --help       Display this help message
-        -f --force      Force prep execution even if the working directory doesn't contain any Makefile.
+	-h --help	Display this help message
+	-v --version	Display the actual Prep version
+	-f --force	Force prep execution even if the working directory doesn't contain any Makefile
+	-c --no-clear	Disable the terminal clearing behavior
+	-u --no-update	Disable the update check
 ```
 
 For safety reasons prep won't execute in a folder not containing a Makefile, you can still force it using

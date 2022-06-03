@@ -9,7 +9,7 @@ A collection of useful tools for working with Epitech-like projects.
 - executes Normez, an Epitech coding-style checker
 - executes Bubulle, another Epitech coding-style checker
 - executes cppcheck, a static analysis tool to detect bugs and dangerous coding construct
-- executes dheader, a header checker to check unused, forgotten inclusions and cohesion problems
+- executes deheader, a header checker to check unused, forgotten inclusions and cohesion problems
 
 ## Installation
 
@@ -60,3 +60,9 @@ the `-f` flag
 
 I hold no rights on these programs all credit goes their creators.
 All that I'm doing is putting them together in a simple script.
+
+### Extra
+
+Special Thanks to Kyrela, a guy in my class who came up to me saying that
+they've been using my script for some time now.
+He's given me some help and motivation to keep maintaing this!

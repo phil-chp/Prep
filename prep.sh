@@ -17,10 +17,12 @@
 # Github page: https://github.com/Philippe-cheype/Prep
 #
 
-PREP_VERSION=1
+PREP_VERSION=1.1.0
 PREP_NEW_VERSION="$PREP_VERSION"
 PREP_SHOULD_CLEAR=1
 
+
+# ============================================== Misc ============================================== #
 if [[ "$*" != *"-u"* ]] && [[ "$*" != *"--no-update"* ]]
 then
   PREP_NEW_VERSION=$(curl -fsSL https://raw.githubusercontent.com/Philippe-cheype/Prep/master/prep.sh | grep -P "^PREP_VERSION=" | sed 's/PREP_VERSION=//g')
@@ -34,9 +36,8 @@ then
   if [ "$res" == "y" ] || [ "$res" == "Y" ] || [ "$res" == "yes" ] || [ "$res" == "Yes" ] || [ "$res" == "YES" ]
   then
     sudo git clone https://github.com/Philippe-cheype/Prep.git /tmp/prep -q
-    cd /tmp/prep
     sudo /tmp/prep/install.sh > /dev/null
-    cd - > /dev/null
+    cp -rf /tmp/prep/* .
     sudo rm -rf /tmp/prep
     echo -e "Prep updated successfully\n"
     prep "$@"
@@ -46,7 +47,7 @@ fi
 
 if [[ "$*" == *"-v"* ]] || [[ "$*" == *"--version"* ]]
 then
-  echo "Prep version $PREP_VERSION"
+  echo "Prep version: $PREP_VERSION"
   if [ "$PREP_VERSION" == "$PREP_NEW_VERSION" ]
   then
     echo "Up-to-date"
@@ -75,15 +76,17 @@ then
   PREP_SHOULD_CLEAR=0
 fi
 
-if (! make fclean &> /dev/null) && [[ "$*" != *"-f"* ]] && [[ "$*" != *"--force"* ]]
+if (! ls | grep Makefile &> /dev/null) && [[ "$*" != *"-f"* ]] && [[ "$*" != *"--force"* ]]
 then
   echo -e "No Makefile detected, stopping execution.\n\e[3mTo force prep to continue execution, use -f\e[23m"
   exit 1
 fi
 
+
+# ============================================ Mr. Clean =========================================== #
 if [ "$PREP_SHOULD_CLEAR" == "1" ]; then clear; fi
 echo "Make fclean + Removing unnecessary files:"
-echo "- Make fclean done"
+make -s fclean                     && echo "- Make fclean done"
 find . -name "*.o"         -delete && echo "- Removed .o files"
 find . -name "*.gc*"       -delete && echo "- Removed criterion temp files"
 find . -name "*.*~"        -delete && echo "- Removed emacs temp files"
@@ -99,6 +102,8 @@ echo -e "\nRemoved temp files.\nPress enter to continue..."
 read -r a
 
 
+
+# ============================================= NormEZ ============================================= #
 if [ "$PREP_SHOULD_CLEAR" == "1" ]; then clear; fi
 if type normez &> /dev/null
 then
@@ -113,6 +118,8 @@ echo "Press enter to continue..."
 read -r a
 
 
+
+# ============================================= Bubulle ============================================ #
 if [ "$PREP_SHOULD_CLEAR" == "1" ]; then clear; fi
 if type bubulle &> /dev/null
 then
@@ -127,6 +134,8 @@ echo "Press enter to continue..."
 read -r a
 
 
+
+# ============================================ CppCheck ============================================ #
 if [ "$PREP_SHOULD_CLEAR" == "1" ]; then clear; fi
 if type cppcheck &> /dev/null
 then
@@ -141,6 +150,8 @@ echo "Press enter to continue..."
 read -r a
 
 
+
+# =========================================== Deheader ============================================= #
 if [ "$PREP_SHOULD_CLEAR" == "1" ]; then clear; fi
 if type deheader &> /dev/null
 then
@@ -153,4 +164,7 @@ else
 fi
 echo -e "Prep finished.\nPress enter to exit..."
 read -r a
+
+
+
 if [ "$PREP_SHOULD_CLEAR" == "1" ]; then clear; fi

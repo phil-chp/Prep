@@ -84,7 +84,7 @@ fi
 
 
 # ============================================ Mr. Clean =========================================== #
-if [ "$PREP_SHOULD_CLEAR" == "1" ]; then clear; fi
+if [ "$PREP_SHOULD_CLEAR" == "1" ]; then tput smcup; clear; fi
 echo "Make fclean + Removing unnecessary files:"
 make -s fclean                     && echo "- Make fclean done"
 find . -name "*.o"         -delete && echo "- Removed .o files"
@@ -167,4 +167,4 @@ read -r a
 
 
 
-if [ "$PREP_SHOULD_CLEAR" == "1" ]; then clear; fi
+if [ "$PREP_SHOULD_CLEAR" == "1" ]; then tput rmcup; fi

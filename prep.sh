@@ -45,7 +45,7 @@ then
   fi
 fi
 
-if [[ "$*" == *"-v"* ]] || [[ "$*" == *"--version"* ]]
+if [[ "$*" == *"-V"* ]] || [[ "$*" == *"--version"* ]]
 then
   echo "Prep version: $PREP_VERSION"
   if [ "$PREP_VERSION" == "$PREP_NEW_VERSION" ]
@@ -59,12 +59,12 @@ fi
 
 if [[ "$*" == *"-h"* ]] || [[ "$*" == *"--help"* ]]
 then
-  echo -e "prep [-hvfCU]
+  echo -e "prep [-h] [-V] [-f] [-C] [-U]
 A collection of useful tools for working with Epitech-like projects.
 
 USAGE:
 \t-h --help\tDisplay this help message
-\t-v --version\tDisplay the actual Prep version
+\t-V --version\tDisplay the actual Prep version
 \t-f --force\tForce prep execution even if the working directory doesn't contain any Makefile
 \t-S --no-screen\tDisable the terminal screening behavior
 \t-U --no-update\tDisable the update check"

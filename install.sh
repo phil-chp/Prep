@@ -35,32 +35,32 @@ function install_program {
   fi
 
   if ( type dnf &> /dev/null ); then
-    dnf install $1 -y
+    dnf install "$1" -y
   elif ( type yum &> /dev/null ); then
-    yum install $1 -y
+    yum install "$1" -y
   elif ( type apt-get &> /dev/null ); then
-    apt-get install $1 -y
+    apt-get install "$1" -y
   elif ( type brew &> /dev/null ); then
     brew install cppcheck
   elif ( type emerge &> /dev/null ); then
-    emerge dev-lang/$1
+    emerge dev-lang/"$1"
   elif ( type pacman &> /dev/null ); then
-    pacman -S $1
+    pacman -S "$1"
   elif ( type brew &> /dev/null ); then
-    brew install $1
+    brew install "$1"
   elif ( type pkg &> /dev/null ); then
-    pkg install $1
+    pkg install "$1"
   elif ( type doas &> /dev/null ); then
-    doas pkg_add $1
+    doas pkg_add "$1"
   elif ( type snap &> /dev/null ); then
-    snap install $1 --classic -y
+    snap install "$1" --classic -y
   else
     echo -e "You don't have $1 installed, or it wasn't found, and we couldn't find any compatible package manager to install it!"
     echo -e "You can try to install it manually: https://www.google.com/search?q=$1\n"
     exit 1
   fi
 
-  install_program ${@:2}
+  install_program "${@:2}"
 }
 
 

@@ -23,7 +23,7 @@ PREP_SHOULD_CLEAR=1
 
 
 # ============================================== Misc ============================================== #
-if [[ "$*" != *"-u"* ]] && [[ "$*" != *"--no-update"* ]]
+if [[ "$*" != *"-U"* ]] && [[ "$*" != *"--no-update"* ]]
 then
   PREP_NEW_VERSION=$(curl -fsSL https://raw.githubusercontent.com/Philippe-cheype/Prep/master/prep.sh | grep -P "^PREP_VERSION=" | sed 's/PREP_VERSION=//g')
 fi
@@ -59,19 +59,19 @@ fi
 
 if [[ "$*" == *"-h"* ]] || [[ "$*" == *"--help"* ]]
 then
-  echo -e "prep [-h] [-v] [-f] [-c] [-u]
+  echo -e "prep [-hvfCU]
 A collection of useful tools for working with Epitech-like projects.
 
 USAGE:
 \t-h --help\tDisplay this help message
 \t-v --version\tDisplay the actual Prep version
 \t-f --force\tForce prep execution even if the working directory doesn't contain any Makefile
-\t-c --no-clear\tDisable the terminal clearing behavior
-\t-u --no-update\tDisable the update check"
+\t-S --no-screen\tDisable the terminal clearing behavior
+\t-U --no-update\tDisable the update check"
   exit
 fi
 
-if [[ "$*" == *"-c"* ]] || [[ "$*" == *"--no-clear"* ]]
+if [[ "$*" == *"-S"* ]] || [[ "$*" == *"--no-screen"* ]]
 then
   PREP_SHOULD_CLEAR=0
 fi

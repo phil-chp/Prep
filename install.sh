@@ -6,12 +6,12 @@ SEPARATOR="---------------------"
 # ============================================== Misc ============================================== #
 if [[ "$*" == *"-h"* ]] || [[ "$*" == *"--help"* ]]
 then
-  echo -e "install.sh [-h] [-r]
+  echo -e "install.sh [-hR]
 Install the Prep script on the system
 
 USAGE:
 \t-h --help\tDisplay this message
-\t-r --remove\tRemove the program from the system"
+\t-R --remove\tRemove the program from the system"
   exit
 fi
 
@@ -20,7 +20,7 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
-if [[ "$*" == *"-r"* ]] || [[ "$*" == *"--remove"* ]]
+if [[ "$*" == *"-R"* ]] || [[ "$*" == *"--remove"* ]]
 then
   echo "Removing Prep..."
   rm -rf /usr/local/bin/prep
@@ -30,7 +30,7 @@ then
 fi
 
 function install_program {
-  if [ -z $1 ]; then
+  if [ -z "$1" ]; then
     return
   fi
 
@@ -173,4 +173,4 @@ fi
 
 echo "Prep installed!"
 echo "To use it, just call 'prep'"
-echo "Usage: prep [-h] [-f] [-v] [-c] [-u]"
+echo "Usage: prep [-hvfSU]"

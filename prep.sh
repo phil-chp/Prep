@@ -99,7 +99,7 @@ find . -name "*.tmp"       -delete && echo "- Removed temporary files made by vs
 find . -name "__pycache__" -delete && echo "- Removed python cache"
 find . -name "*.hi"        -delete && echo "- Removed haskell interface files"
 echo -e "\nRemoved temp files.\nPress enter to continue..."
-read -r a
+read -r
 
 
 
@@ -115,7 +115,7 @@ else
   echo "- NormEZ: https://github.com/ronanboiteau/NormEZ/"
 fi
 echo "Press enter to continue..."
-read -r a
+read -r
 
 
 
@@ -131,7 +131,7 @@ else
   echo "- Bubulle: https://github.com/aureliancnx/Bubulle-Norminette/"
 fi
 echo "Press enter to continue..."
-read -r a
+read -r
 
 
 
@@ -147,7 +147,7 @@ else
   echo "- cppcheck: http://cppcheck.sourceforge.net/"
 fi
 echo "Press enter to continue..."
-read -r a
+read -r
 
 
 
@@ -163,7 +163,7 @@ else
   echo "- deheader: https://gitlab.com/esr/deheader/"
 fi
 echo -e "Prep finished.\nPress enter to exit..."
-read -r a
+read -r
 
 
 

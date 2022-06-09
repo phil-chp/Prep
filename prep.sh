@@ -66,7 +66,7 @@ USAGE:
 \t-h --help\tDisplay this help message
 \t-v --version\tDisplay the actual Prep version
 \t-f --force\tForce prep execution even if the working directory doesn't contain any Makefile
-\t-S --no-screen\tDisable the terminal clearing behavior
+\t-S --no-screen\tDisable the terminal screening behavior
 \t-U --no-update\tDisable the update check"
   exit
 fi

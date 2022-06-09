@@ -17,7 +17,7 @@
 # Github page: https://github.com/Philippe-cheype/Prep
 #
 
-PREP_VERSION=1.1.0
+PREP_VERSION=1.2.0
 PREP_NEW_VERSION="$PREP_VERSION"
 PREP_SHOULD_CLEAR=1
 

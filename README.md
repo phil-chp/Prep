@@ -32,7 +32,7 @@ git clone https://github.com/Philippe-cheype/Prep.git prep && cd prep && sudo ./
 ## Usage
 
 ```
-prep [-h] [-V] [-f] [-C] [-U]
+prep [-h] [-V] [-f] [-S] [-U]
 A collection of useful tools for working with Epitech-like projects.
 
 USAGE:

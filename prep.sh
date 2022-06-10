@@ -59,7 +59,7 @@ fi
 
 if [[ "$*" == *"-h"* ]] || [[ "$*" == *"--help"* ]]
 then
-  echo -e "prep [-h] [-V] [-f] [-C] [-U]
+  echo -e "prep [-h] [-V] [-f] [-S] [-U]
 A collection of useful tools for working with Epitech-like projects.
 
 USAGE:

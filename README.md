@@ -32,15 +32,15 @@ git clone https://github.com/Philippe-cheype/Prep.git prep && cd prep && sudo ./
 ## Usage
 
 ```
-prep [-h] [-v] [-f] [-c] [-u]
+prep [-h] [-V] [-f] [-S] [-U]
 A collection of useful tools for working with Epitech-like projects.
 
 USAGE:
-	-h --help	Display this help message
-	-v --version	Display the actual Prep version
-	-f --force	Force prep execution even if the working directory doesn't contain any Makefile
-	-c --no-clear	Disable the terminal clearing behavior
-	-u --no-update	Disable the update check
+        -h --help       Display this help message
+        -V --version    Display the actual Prep version
+        -f --force      Force prep execution even if the working directory doesn't contain any Makefile
+        -S --no-screen  Disable the terminal screening behavior
+        -U --no-update  Disable the update check
 ```
 
 For safety reasons prep won't execute in a folder not containing a Makefile, you can still force it using

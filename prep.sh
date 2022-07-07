@@ -17,13 +17,13 @@
 # Github page: https://github.com/Philippe-cheype/Prep
 #
 
-PREP_VERSION=1.1.0
+PREP_VERSION=1.2.0
 PREP_NEW_VERSION="$PREP_VERSION"
 PREP_SHOULD_CLEAR=1
 
 
 # ============================================== Misc ============================================== #
-if [[ "$*" != *"-u"* ]] && [[ "$*" != *"--no-update"* ]]
+if [[ "$*" != *"-U"* ]] && [[ "$*" != *"--no-update"* ]]
 then
   PREP_NEW_VERSION=$(curl -fsSL https://raw.githubusercontent.com/Philippe-cheype/Prep/master/prep.sh | grep -P "^PREP_VERSION=" | sed 's/PREP_VERSION=//g')
 fi
@@ -45,7 +45,7 @@ then
   fi
 fi
 
-if [[ "$*" == *"-v"* ]] || [[ "$*" == *"--version"* ]]
+if [[ "$*" == *"-V"* ]] || [[ "$*" == *"--version"* ]]
 then
   echo "Prep version: $PREP_VERSION"
   if [ "$PREP_VERSION" == "$PREP_NEW_VERSION" ]
@@ -59,19 +59,19 @@ fi
 
 if [[ "$*" == *"-h"* ]] || [[ "$*" == *"--help"* ]]
 then
-  echo -e "prep [-h] [-v] [-f] [-c] [-u]
+  echo -e "prep [-h] [-V] [-f] [-S] [-U]
 A collection of useful tools for working with Epitech-like projects.
 
 USAGE:
 \t-h --help\tDisplay this help message
-\t-v --version\tDisplay the actual Prep version
+\t-V --version\tDisplay the actual Prep version
 \t-f --force\tForce prep execution even if the working directory doesn't contain any Makefile
-\t-c --no-clear\tDisable the terminal clearing behavior
-\t-u --no-update\tDisable the update check"
+\t-S --no-screen\tDisable the terminal screening behavior
+\t-U --no-update\tDisable the update check"
   exit
 fi
 
-if [[ "$*" == *"-c"* ]] || [[ "$*" == *"--no-clear"* ]]
+if [[ "$*" == *"-S"* ]] || [[ "$*" == *"--no-screen"* ]]
 then
   PREP_SHOULD_CLEAR=0
 fi
@@ -84,7 +84,7 @@ fi
 
 
 # ============================================ Mr. Clean =========================================== #
-if [ "$PREP_SHOULD_CLEAR" == "1" ]; then clear; fi
+if [ "$PREP_SHOULD_CLEAR" == "1" ]; then tput smcup; clear; fi
 echo "Make fclean + Removing unnecessary files:"
 make -s fclean                     && echo "- Make fclean done"
 find . -name "*.o"         -delete && echo "- Removed .o files"
@@ -99,7 +99,7 @@ find . -name "*.tmp"       -delete && echo "- Removed temporary files made by vs
 find . -name "__pycache__" -delete && echo "- Removed python cache"
 find . -name "*.hi"        -delete && echo "- Removed haskell interface files"
 echo -e "\nRemoved temp files.\nPress enter to continue..."
-read -r a
+read -r
 
 
 
@@ -115,7 +115,7 @@ else
   echo "- NormEZ: https://github.com/ronanboiteau/NormEZ/"
 fi
 echo "Press enter to continue..."
-read -r a
+read -r
 
 
 
@@ -131,7 +131,7 @@ else
   echo "- Bubulle: https://github.com/aureliancnx/Bubulle-Norminette/"
 fi
 echo "Press enter to continue..."
-read -r a
+read -r
 
 
 
@@ -147,7 +147,7 @@ else
   echo "- cppcheck: http://cppcheck.sourceforge.net/"
 fi
 echo "Press enter to continue..."
-read -r a
+read -r
 
 
 
@@ -163,8 +163,8 @@ else
   echo "- deheader: https://gitlab.com/esr/deheader/"
 fi
 echo -e "Prep finished.\nPress enter to exit..."
-read -r a
+read -r
 
 
 
-if [ "$PREP_SHOULD_CLEAR" == "1" ]; then clear; fi
+if [ "$PREP_SHOULD_CLEAR" == "1" ]; then tput rmcup; fi

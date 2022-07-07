@@ -6,12 +6,12 @@ SEPARATOR="---------------------"
 # ============================================== Misc ============================================== #
 if [[ "$*" == *"-h"* ]] || [[ "$*" == *"--help"* ]]
 then
-  echo -e "install.sh [-h] [-r]
+  echo -e "install.sh [-hR]
 Install the Prep script on the system
 
 USAGE:
 \t-h --help\tDisplay this message
-\t-r --remove\tRemove the program from the system"
+\t-R --remove\tRemove the program from the system"
   exit
 fi
 
@@ -20,7 +20,7 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
-if [[ "$*" == *"-r"* ]] || [[ "$*" == *"--remove"* ]]
+if [[ "$*" == *"-R"* ]] || [[ "$*" == *"--remove"* ]]
 then
   echo "Removing Prep..."
   rm -rf /usr/local/bin/prep
@@ -30,37 +30,37 @@ then
 fi
 
 function install_program {
-  if [ -z $1 ]; then
+  if [ -z "$1" ]; then
     return
   fi
 
   if ( type dnf &> /dev/null ); then
-    dnf install $1 -y
+    dnf install "$1" -y
   elif ( type yum &> /dev/null ); then
-    yum install $1 -y
+    yum install "$1" -y
   elif ( type apt-get &> /dev/null ); then
-    apt-get install $1 -y
+    apt-get install "$1" -y
   elif ( type brew &> /dev/null ); then
     brew install cppcheck
   elif ( type emerge &> /dev/null ); then
-    emerge dev-lang/$1
+    emerge dev-lang/"$1"
   elif ( type pacman &> /dev/null ); then
-    pacman -S $1
+    pacman -S "$1"
   elif ( type brew &> /dev/null ); then
-    brew install $1
+    brew install "$1"
   elif ( type pkg &> /dev/null ); then
-    pkg install $1
+    pkg install "$1"
   elif ( type doas &> /dev/null ); then
-    doas pkg_add $1
+    doas pkg_add "$1"
   elif ( type snap &> /dev/null ); then
-    snap install $1 --classic -y
+    snap install "$1" --classic -y
   else
     echo -e "You don't have $1 installed, or it wasn't found, and we couldn't find any compatible package manager to install it!"
     echo -e "You can try to install it manually: https://www.google.com/search?q=$1\n"
     exit 1
   fi
 
-  install_program ${@:2}
+  install_program "${@:2}"
 }
 
 
@@ -173,4 +173,4 @@ fi
 
 echo "Prep installed!"
 echo "To use it, just call 'prep'"
-echo "Usage: prep [-h] [-f] [-v] [-c] [-u]"
+echo "Usage: prep [-h] [-V] [-f] [-S] [-U]"

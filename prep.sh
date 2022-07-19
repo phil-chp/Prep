@@ -99,7 +99,7 @@ USAGE:
   exit
 fi
 
-if (! ls Makefile &> /dev/null) && ! $f
+if (! ls Makefile &> /dev/null) && [ $f == 0 ]
 then
   echo -e "No Makefile detected, stopping execution.\n\e[3mTo force prep to continue execution, use -f\e[23m"
   exit 1

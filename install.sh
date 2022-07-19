@@ -68,6 +68,19 @@ echo -e "Installing Prep...\n\n"
 
 
 
+# ============================================== getops ============================================== #
+getopt --test &> /dev/null
+if [ "$?" != 4 ]
+then
+  echo "Enhanced getopt is not installed on your system. Please install it manually."
+  echo -e "You can verify it by running: \n\tgetopt --test; echo \$?"
+  echo "If it displays 4, it means it is correctly installed."
+  echo -e "\nMore infos here:\nhttps://manpages.ubuntu.com/manpages/bionic/man1/getopt.1.html"
+  exit 1
+fi
+
+
+
 # ============================================== Ruby ============================================== #
 if ! type ruby &> /dev/null
 then
@@ -173,4 +186,4 @@ fi
 
 echo "Prep installed!"
 echo "To use it, just call 'prep'"
-echo "Usage: prep [-h] [-V] [-f] [-S] [-U]"
+echo "Usage: prep [-hvfSU]"

@@ -19,11 +19,39 @@
 
 PREP_VERSION=1.2.0
 PREP_NEW_VERSION="$PREP_VERSION"
-PREP_SHOULD_CLEAR=1
+
+
+
+# ========================================== Argument parsing ====================================== #
+LONGOPTS=help,version,force,no-screen,no-update
+OPTIONS=hvfSU
+PARSED=$(getopt --options=$OPTIONS --longoptions=$LONGOPTS --name prep -- "$@")
+if [ "$?" != 0 ]
+then
+    exit 2
+fi
+eval set -- "$PARSED"
+
+h=0 v=0 f=0 S=0 U=0
+
+while [ "$#" != 0 ]
+do
+    case $1 in
+        -h|--help) h=1;;
+        -v|--version) v=1;;
+        -f|--force) f=1;;
+        -S|--no-screen) S=1;;
+        -U|--no-update) U=1;;
+        --);;
+        *) echo "prep: Invalid argument '$1'"; exit 1;;
+    esac
+    shift
+done
+
 
 
 # ============================================== Misc ============================================== #
-if [[ "$*" != *"-U"* ]] && [[ "$*" != *"--no-update"* ]]
+if [ $U == 0 ]
 then
   PREP_NEW_VERSION=$(curl -fsSL https://raw.githubusercontent.com/Philippe-cheype/Prep/master/prep.sh | grep -P "^PREP_VERSION=" | sed 's/PREP_VERSION=//g')
 fi
@@ -45,7 +73,7 @@ then
   fi
 fi
 
-if [[ "$*" == *"-V"* ]] || [[ "$*" == *"--version"* ]]
+if [ $v == 1 ]
 then
   echo "Prep version: $PREP_VERSION"
   if [ "$PREP_VERSION" == "$PREP_NEW_VERSION" ]
@@ -57,26 +85,21 @@ then
   exit
 fi
 
-if [[ "$*" == *"-h"* ]] || [[ "$*" == *"--help"* ]]
+if [ $h == 1 ]
 then
-  echo -e "prep [-h] [-V] [-f] [-S] [-U]
+  echo -e "prep [-hvfSU]
 A collection of useful tools for working with Epitech-like projects.
 
 USAGE:
 \t-h --help\tDisplay this help message
-\t-V --version\tDisplay the actual Prep version
+\t-v --version\tDisplay the actual Prep version
 \t-f --force\tForce prep execution even if the working directory doesn't contain any Makefile
 \t-S --no-screen\tDisable the terminal screening behavior
 \t-U --no-update\tDisable the update check"
   exit
 fi
 
-if [[ "$*" == *"-S"* ]] || [[ "$*" == *"--no-screen"* ]]
-then
-  PREP_SHOULD_CLEAR=0
-fi
-
-if (! ls Makefile &> /dev/null) && [[ "$*" != *"-f"* ]] && [[ "$*" != *"--force"* ]]
+if (! ls Makefile &> /dev/null) && ! $f
 then
   echo -e "No Makefile detected, stopping execution.\n\e[3mTo force prep to continue execution, use -f\e[23m"
   exit 1
@@ -84,7 +107,7 @@ fi
 
 
 # ============================================ Mr. Clean =========================================== #
-if [ "$PREP_SHOULD_CLEAR" == "1" ]; then tput smcup; clear; fi
+if [ $S == 0 ]; then tput smcup; clear; fi
 echo "Make fclean + Removing unnecessary files:"
 make -s fclean                     && echo "- Make fclean done"
 find . -name "*.o"         -delete && echo "- Removed .o files"
@@ -104,7 +127,7 @@ read -r
 
 
 # ============================================= NormEZ ============================================= #
-if [ "$PREP_SHOULD_CLEAR" == "1" ]; then clear; fi
+if [ $S == 0 ]; then clear; fi
 if type normez &> /dev/null
 then
   normez
@@ -120,7 +143,7 @@ read -r
 
 
 # ============================================= Bubulle ============================================ #
-if [ "$PREP_SHOULD_CLEAR" == "1" ]; then clear; fi
+if [ $S == 0 ]; then clear; fi
 if type bubulle &> /dev/null
 then
   bubulle
@@ -136,7 +159,7 @@ read -r
 
 
 # ============================================ CppCheck ============================================ #
-if [ "$PREP_SHOULD_CLEAR" == "1" ]; then clear; fi
+if [ $S == 0 ]; then clear; fi
 if type cppcheck &> /dev/null
 then
   cppcheck -q .
@@ -152,7 +175,7 @@ read -r
 
 
 # =========================================== Deheader ============================================= #
-if [ "$PREP_SHOULD_CLEAR" == "1" ]; then clear; fi
+if [ $S == 0 ]; then clear; fi
 if type deheader &> /dev/null
 then
   deheader
@@ -167,4 +190,4 @@ read -r
 
 
 
-if [ "$PREP_SHOULD_CLEAR" == "1" ]; then tput rmcup; fi
+if [ $S == 0 ]; then tput rmcup; fi

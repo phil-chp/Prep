@@ -3,24 +3,38 @@
 SEPARATOR="---------------------"
 
 
-# ============================================== Misc ============================================== #
-if [[ "$*" == *"-h"* ]] || [[ "$*" == *"--help"* ]]
-then
-  echo -e "install.sh [-hR]
-Install the Prep script on the system
 
-USAGE:
-\t-h --help\tDisplay this message
-\t-R --remove\tRemove the program from the system"
+# ======================================== Argument parsing ======================================== #
+h=0 R=0
+while [[ $# -gt 0 ]]
+do
+  case "$1" in
+    -h|--help) h=1;;
+    -R|--remove) R=1;;
+    *) echo "install.sh : invalid option -- '$1'"; exit 1;;
+  esac
+  shift
+done
+
+
+
+# ============================================== Misc ============================================== #
+if [ $h == 1 ]
+then
+  echo -e "install.sh [-h] [-R]"
+  echo -e "Install the Prep script on the system\n"
+  echo -e "USAGE:"
+  echo -e "\t-h --help\tDisplay this message"
+  echo -e "\t-R --remove\tRemove the program from the system"
   exit
 fi
 
 if [ "$EUID" -ne 0 ]
-  then echo "You have to run this script as root!"
-  exit
+  then echo "prep: you have to run this script as root!"
+  exit 1
 fi
 
-if [[ "$*" == *"-R"* ]] || [[ "$*" == *"--remove"* ]]
+if [ $R == 1 ]
 then
   echo "Removing Prep..."
   rm -rf /usr/local/bin/prep

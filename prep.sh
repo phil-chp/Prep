@@ -43,7 +43,7 @@ do
         -S|--no-screen) S=1;;
         -U|--no-update) U=1;;
         --);;
-        *) echo "prep: invalid argument '$1'"; exit 1;;
+        *) echo "prep: invalid argument -- '$1'"; exit 1;;
     esac
     shift
 done

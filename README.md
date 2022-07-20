@@ -51,6 +51,11 @@ the `-f` flag
 
 > <span style="color:red">Make sure you are not about to lose files before executing this!</span>
 
+The exclude-path options support wildcards, for example:
+
+``` bash
+prep -f cmake*/
+```
 
 Please notice that adding path to exclude from analyse will copy the whole directory to a temporary 
 one, so it's recommended to use it only with small projects.

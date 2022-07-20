@@ -43,7 +43,7 @@ do
         -S|--no-screen) S=1;;
         -U|--no-update) U=1;;
         --);;
-        *) echo "prep: invalid argument -- '$1'"; exit 1;;
+        *) echo "prep : invalid argument -- '$1'"; exit 1;;
     esac
     shift
 done
@@ -101,7 +101,7 @@ fi
 
 if (! ls Makefile &> /dev/null) && [ $f == 0 ]
 then
-  echo -e "prep: no Makefile detected, stopping execution.\n\e[3mTo force prep to continue execution, use -f\e[23m"
+  echo -e "prep : no Makefile detected, stopping execution.\n\e[3mTo force prep to continue execution, use -f\e[23m"
   exit 1
 fi
 

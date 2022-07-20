@@ -32,12 +32,12 @@ git clone https://github.com/Philippe-cheype/Prep.git prep && cd prep && sudo ./
 ## Usage
 
 ```
-prep [-h] [-V] [-f] [-S] [-U]
+prep [-hvfSU]
 A collection of useful tools for working with Epitech-like projects.
 
 USAGE:
         -h --help       Display this help message
-        -V --version    Display the actual Prep version
+        -v --version    Display the actual Prep version
         -f --force      Force prep execution even if the working directory doesn't contain any Makefile
         -S --no-screen  Disable the terminal screening behavior
         -U --no-update  Disable the update check
@@ -47,7 +47,7 @@ For safety reasons prep won't execute in a folder not containing a Makefile, you
 the `-f` flag
 
 
-> <span style="color:red">Make sure you are not about to loose files before executing this!</span>
+> <span style="color:red">Make sure you are not about to lose files before executing this!</span>
 
 ## Tools used
 
@@ -65,4 +65,4 @@ All that I'm doing is putting them together in a simple script.
 
 Special Thanks to Kyrela, a guy in my class who came up to me saying that
 they've been using my script for some time now.
-He's given me some help and motivation to keep maintaing this!
+He's given me some help and motivation to keep maintaining this!

@@ -24,11 +24,29 @@ PREP_NEW_VERSION="$PREP_VERSION"
 
 trap ctrl_c INT
 
-function ctrl_c() {
-  tput rmcup
+ctrl_c() {
+  if [ "$S" == 0 ]; then tput rmcup; fi
   echo "Stopping prep execution..."
   rm -rf /tmp/prep_temp
   exit 1
+}
+
+run_program() {
+  if [ "$S" == 0 ]; then clear; fi
+  prg="$1" prg_name="$2" prg_url="$3" completion_msg="$4"
+  if ( ! type "$prg" &> /dev/null )
+  then
+    echo "$prg_name wasn't found. Please re-install Prep or install $prg_name manually."
+    echo "- Prep: https://github.com/Philippe-cheype/Prep"
+    echo "- $prg_name: $prg_url"
+    return 1
+  fi
+
+  shift; shift; shift; shift
+  "$prg" "$@"
+  echo -e "$completion_msg"
+  read -r
+  return 0
 }
 
 
@@ -170,69 +188,14 @@ fi
 
 
 
-# ============================================= NormEZ ============================================= #
-if [ $S == 0 ]; then clear; fi
-if type normez &> /dev/null
-then
-  normez
-  echo -e "\nNormEZ done."
-else
-  echo "NormEZ wasn't found. Please re-install Prep or install NormEZ manually."
-  echo "- Prep: https://github.com/Philippe-cheype/Prep"
-  echo "- NormEZ: https://github.com/ronanboiteau/NormEZ/"
-fi
-echo "Press enter to continue..."
-read -r
+# ============================================ Programs ============================================ #
+run_program normez "NormEZ" "https://github.com/ronanboiteau/NormEZ/" "Press enter to continue..."
+run_program bubulle "Bubulle" "https://github.com/aureliancnx/Bubulle-Norminette/" "Press enter to continue..."
+run_program cppcheck "CppCheck" "http://cppcheck.sourceforge.net/" "Press enter to continue..." -q .
+run_program deheader "Deheader" "https://gitlab.com/esr/deheader/" "Prep finished.\nPress enter to exit...."
 
 
 
-# ============================================= Bubulle ============================================ #
-if [ $S == 0 ]; then clear; fi
-if type bubulle &> /dev/null
-then
-  bubulle
-  echo -e "\nBubulle done."
-else
-  echo "Bubulle wasn't found. Please re-install Prep or install Bubulle manually."
-  echo "- Prep: https://github.com/Philippe-cheype/Prep"
-  echo "- Bubulle: https://github.com/aureliancnx/Bubulle-Norminette/"
-fi
-echo "Press enter to continue..."
-read -r
-
-
-
-# ============================================ CppCheck ============================================ #
-if [ $S == 0 ]; then clear; fi
-if type cppcheck &> /dev/null
-then
-  cppcheck -q .
-  echo -e "\nCppcheck done."
-else
-  echo "cppcheck wasn't found. Please re-install Prep or install cppcheck manually."
-  echo "- Prep: https://github.com/Philippe-cheype/Prep"
-  echo "- cppcheck: http://cppcheck.sourceforge.net/"
-fi
-echo "Press enter to continue..."
-read -r
-
-
-
-# =========================================== Deheader ============================================= #
-if [ $S == 0 ]; then clear; fi
-if type deheader &> /dev/null
-then
-  deheader
-  echo -e "\nDeheader done."
-else
-  echo "deheader wasn't found. Please re-install Prep or install deheader manually."
-  echo "- Prep: https://github.com/Philippe-cheype/Prep"
-  echo "- deheader: https://gitlab.com/esr/deheader/"
-fi
-echo -e "Prep finished.\nPress enter to exit..."
-read -r
-
-
-
+# ============================================ Cleanup ============================================= #
 rm -rf /tmp/prep_temp
-tput rmcup
+if [ $S == 0 ]; then tput rmcup; fi

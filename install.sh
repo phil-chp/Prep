@@ -200,4 +200,4 @@ fi
 
 echo "Prep installed!"
 echo "To use it, just call 'prep'"
-echo "Usage: prep [-hvfSU]"
+echo "Usage: prep [-hvfSU] [<exclude-path>...]"

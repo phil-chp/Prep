@@ -17,8 +17,19 @@
 # Github page: https://github.com/Philippe-cheype/Prep
 #
 
-PREP_VERSION=1.2.1
+# ============================================= System ============================================= #
+
+PREP_VERSION=1.3.0
 PREP_NEW_VERSION="$PREP_VERSION"
+
+trap ctrl_c INT
+
+function ctrl_c() {
+  tput rmcup
+  echo "Stopping prep execution..."
+  rm -rf /tmp/prep_temp
+  exit 1
+}
 
 
 
@@ -34,7 +45,7 @@ eval set -- "$PARSED"
 
 h=0 v=0 f=0 S=0 U=0
 
-while [ "$#" != 0 ]
+while true
 do
     case $1 in
         -h|--help) h=1;;
@@ -42,15 +53,25 @@ do
         -f|--force) f=1;;
         -S|--no-screen) S=1;;
         -U|--no-update) U=1;;
-        --);;
+        --) shift; break;;
         *) echo "prep : invalid argument -- '$1'"; exit 1;;
     esac
     shift
 done
 
+ignored_files=$*
+for file in $ignored_files
+do
+  if ! ls "$file" &> /dev/null
+  then
+    echo "prep : Directory '$file' does not exist."
+    exit 1
+  fi
+done
 
 
-# ============================================== Misc ============================================== #
+
+# ============================================= Update ============================================= #
 if [ $U == 0 ]
 then
   PREP_NEW_VERSION=$(curl -fsSL https://raw.githubusercontent.com/Philippe-cheype/Prep/master/prep.sh | grep -P "^PREP_VERSION=" | sed 's/PREP_VERSION=//g')
@@ -73,6 +94,9 @@ then
   fi
 fi
 
+
+
+# ======================================= Help & versioning ======================================== #
 if [ $v == 1 ]
 then
   echo "Prep version: $PREP_VERSION"
@@ -87,23 +111,29 @@ fi
 
 if [ $h == 1 ]
 then
-  echo -e "prep [-hvfSU]
+  echo "prep [-hvfSU] [<exclude-path>...]
 A collection of useful tools for working with Epitech-like projects.
 
 USAGE:
-\t-h --help\tDisplay this help message
-\t-v --version\tDisplay the actual Prep version
-\t-f --force\tForce prep execution even if the working directory doesn't contain any Makefile
-\t-S --no-screen\tDisable the terminal screening behavior
-\t-U --no-update\tDisable the update check"
+        -h --help       Display this help message
+        -v --version    Display the actual Prep version
+        -f --force      Force prep execution even if the working directory doesn't contain any Makefile
+        -S --no-screen  Disable the terminal screening behavior
+        -U --no-update  Disable the update check
+
+        exclude-path    The files/directories to exclude from the prep analyse"
   exit
 fi
 
+
+
+# ============================================ Security ============================================ #
 if (! ls Makefile &> /dev/null) && [ $f == 0 ]
 then
   echo -e "prep : no Makefile detected, stopping execution.\n\e[3mTo force prep to continue execution, use -f\e[23m"
   exit 1
 fi
+
 
 
 # ============================================ Mr. Clean =========================================== #
@@ -123,6 +153,20 @@ find . -name "__pycache__" -delete && echo "- Removed python cache"
 find . -name "*.hi"        -delete && echo "- Removed haskell interface files"
 echo -e "\nRemoved temp files.\nPress enter to continue..."
 read -r
+
+
+
+# ======================================== File exclusion ========================================== #
+if [ "$ignored_files" != "" ]
+then
+  rm -rf /tmp/prep_temp
+  for file in $ignored_files
+  do
+    exclude_opts+=( "--exclude=$file" )
+  done
+  rsync -aq "${exclude_opts[@]}" ./ /tmp/prep_temp
+  cd /tmp/prep_temp || (echo "prep : Could not change directory to /tmp/prep_temp"; exit 1)
+fi
 
 
 
@@ -190,4 +234,5 @@ read -r
 
 
 
-if [ $S == 0 ]; then tput rmcup; fi
+rm -rf /tmp/prep_temp
+tput rmcup

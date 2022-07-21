@@ -17,8 +17,37 @@
 # Github page: https://github.com/Philippe-cheype/Prep
 #
 
-PREP_VERSION=1.2.1
+# ============================================= System ============================================= #
+
+PREP_VERSION=1.3.0
 PREP_NEW_VERSION="$PREP_VERSION"
+
+trap ctrl_c INT
+
+ctrl_c() {
+  if [ "$S" == 0 ]; then tput rmcup; fi
+  echo "Stopping prep execution..."
+  rm -rf /tmp/prep_temp
+  exit 1
+}
+
+run_program() {
+  if [ "$S" == 0 ]; then clear; fi
+  prg="$1" prg_name="$2" prg_url="$3" completion_msg="$4"
+  if ( ! type "$prg" &> /dev/null )
+  then
+    echo "$prg_name wasn't found. Please re-install Prep or install $prg_name manually."
+    echo "- Prep: https://github.com/Philippe-cheype/Prep"
+    echo "- $prg_name: $prg_url"
+    return 1
+  fi
+
+  shift; shift; shift; shift
+  "$prg" "$@"
+  echo -e "$completion_msg"
+  read -r
+  return 0
+}
 
 
 
@@ -34,7 +63,7 @@ eval set -- "$PARSED"
 
 h=0 v=0 f=0 S=0 U=0
 
-while [ "$#" != 0 ]
+while true
 do
     case $1 in
         -h|--help) h=1;;
@@ -42,15 +71,25 @@ do
         -f|--force) f=1;;
         -S|--no-screen) S=1;;
         -U|--no-update) U=1;;
-        --);;
+        --) shift; break;;
         *) echo "prep : invalid argument -- '$1'"; exit 1;;
     esac
     shift
 done
 
+ignored_files=$*
+for file in $ignored_files
+do
+  if ! ls "$file" &> /dev/null
+  then
+    echo "prep : Directory '$file' does not exist."
+    exit 1
+  fi
+done
 
 
-# ============================================== Misc ============================================== #
+
+# ============================================= Update ============================================= #
 if [ $U == 0 ]
 then
   PREP_NEW_VERSION=$(curl -fsSL https://raw.githubusercontent.com/Philippe-cheype/Prep/master/prep.sh | grep -P "^PREP_VERSION=" | sed 's/PREP_VERSION=//g')
@@ -73,6 +112,9 @@ then
   fi
 fi
 
+
+
+# ======================================= Help & versioning ======================================== #
 if [ $v == 1 ]
 then
   echo "Prep version: $PREP_VERSION"
@@ -87,23 +129,29 @@ fi
 
 if [ $h == 1 ]
 then
-  echo -e "prep [-hvfSU]
+  echo "prep [-hvfSU] [<exclude-path>...]
 A collection of useful tools for working with Epitech-like projects.
 
 USAGE:
-\t-h --help\tDisplay this help message
-\t-v --version\tDisplay the actual Prep version
-\t-f --force\tForce prep execution even if the working directory doesn't contain any Makefile
-\t-S --no-screen\tDisable the terminal screening behavior
-\t-U --no-update\tDisable the update check"
+        -h --help       Display this help message
+        -v --version    Display the actual Prep version
+        -f --force      Force prep execution even if the working directory doesn't contain any Makefile
+        -S --no-screen  Disable the terminal screening behavior
+        -U --no-update  Disable the update check
+
+        exclude-path    The files/directories to exclude from the prep analyse"
   exit
 fi
 
+
+
+# ============================================ Security ============================================ #
 if (! ls Makefile &> /dev/null) && [ $f == 0 ]
 then
   echo -e "prep : no Makefile detected, stopping execution.\n\e[3mTo force prep to continue execution, use -f\e[23m"
   exit 1
 fi
+
 
 
 # ============================================ Mr. Clean =========================================== #
@@ -126,68 +174,28 @@ read -r
 
 
 
-# ============================================= NormEZ ============================================= #
-if [ $S == 0 ]; then clear; fi
-if type normez &> /dev/null
+# ======================================== File exclusion ========================================== #
+if [ "$ignored_files" != "" ]
 then
-  normez
-  echo -e "\nNormEZ done."
-else
-  echo "NormEZ wasn't found. Please re-install Prep or install NormEZ manually."
-  echo "- Prep: https://github.com/Philippe-cheype/Prep"
-  echo "- NormEZ: https://github.com/ronanboiteau/NormEZ/"
+  rm -rf /tmp/prep_temp
+  for file in $ignored_files
+  do
+    exclude_opts+=( "--exclude=$file" )
+  done
+  rsync -aq "${exclude_opts[@]}" ./ /tmp/prep_temp
+  cd /tmp/prep_temp || (echo "prep : Could not change directory to /tmp/prep_temp"; exit 1)
 fi
-echo "Press enter to continue..."
-read -r
 
 
 
-# ============================================= Bubulle ============================================ #
-if [ $S == 0 ]; then clear; fi
-if type bubulle &> /dev/null
-then
-  bubulle
-  echo -e "\nBubulle done."
-else
-  echo "Bubulle wasn't found. Please re-install Prep or install Bubulle manually."
-  echo "- Prep: https://github.com/Philippe-cheype/Prep"
-  echo "- Bubulle: https://github.com/aureliancnx/Bubulle-Norminette/"
-fi
-echo "Press enter to continue..."
-read -r
+# ============================================ Programs ============================================ #
+run_program normez "NormEZ" "https://github.com/ronanboiteau/NormEZ/" "Press enter to continue..."
+run_program bubulle "Bubulle" "https://github.com/aureliancnx/Bubulle-Norminette/" "Press enter to continue..."
+run_program cppcheck "CppCheck" "http://cppcheck.sourceforge.net/" "Press enter to continue..." -q .
+run_program deheader "Deheader" "https://gitlab.com/esr/deheader/" "Prep finished.\nPress enter to exit...."
 
 
 
-# ============================================ CppCheck ============================================ #
-if [ $S == 0 ]; then clear; fi
-if type cppcheck &> /dev/null
-then
-  cppcheck -q .
-  echo -e "\nCppcheck done."
-else
-  echo "cppcheck wasn't found. Please re-install Prep or install cppcheck manually."
-  echo "- Prep: https://github.com/Philippe-cheype/Prep"
-  echo "- cppcheck: http://cppcheck.sourceforge.net/"
-fi
-echo "Press enter to continue..."
-read -r
-
-
-
-# =========================================== Deheader ============================================= #
-if [ $S == 0 ]; then clear; fi
-if type deheader &> /dev/null
-then
-  deheader
-  echo -e "\nDeheader done."
-else
-  echo "deheader wasn't found. Please re-install Prep or install deheader manually."
-  echo "- Prep: https://github.com/Philippe-cheype/Prep"
-  echo "- deheader: https://gitlab.com/esr/deheader/"
-fi
-echo -e "Prep finished.\nPress enter to exit..."
-read -r
-
-
-
+# ============================================ Cleanup ============================================= #
+rm -rf /tmp/prep_temp
 if [ $S == 0 ]; then tput rmcup; fi
